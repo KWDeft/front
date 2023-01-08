@@ -1,0 +1,8 @@
+#settingBox {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-evenly;
+    
+}
