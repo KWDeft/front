@@ -17,6 +17,8 @@ import {
     SendOutlined,
     DeleteOutlined,
   } from "@ant-design/icons";
+import Comments from "../../components/comments/Comments";
+import UploadFile from "../../components/upload/UploadFile";
   
   const { TextArea } = Input;
   const onChange = (e) => {
@@ -53,19 +55,6 @@ import {
       </Form.Item>
     </>
   );
-  
-  const fileList = [
-    {
-      uid: "-1",
-      name: "이미지 이름1",
-      status: "done"
-    },
-    {
-      uid: "-2",
-      name: "이미지 이름2",
-      status: "done"
-    }
-  ];
 
   const ViewCurriDetail = () => {
     const [form] = Form.useForm();
@@ -84,7 +73,7 @@ import {
           ...comments,
           {
             author: "Han Solo",
-            avatar: "https://joeschmoe.io/api/v1/random",
+            avatar: "",
             content: <p>{value}</p>,
             datetime: moment("2016-11-22").fromNow()
           }
@@ -118,34 +107,11 @@ import {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
         probare, quae sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <Form>
-      <Form.Item>
-        <Image
-              width={200}
-              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-            />
-        </Form.Item>
-  
-        <Form.Item>
-          <Divider orientation="left" orientationMargin="0">
-            댓글
-          </Divider>
-          {comments.length > 0 && <CommentList comments={comments} />}
-          <Comment
-            avatar={
-              <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-            }
-            content={
-              <Editor
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-                submitting={submitting}
-                value={value}
-              />
-            }
+      <UploadFile />
+          <Comments
+            commentsUrl="http://localhost:3004/comments"
+            currentUserId="1"
           />
-        </Form.Item>
-      </Form>
     </>
     );
   };

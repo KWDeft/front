@@ -1,5 +1,5 @@
 import { Button, Modal } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PasswordSetting from './PasswordSetting.js';
 import './Setting.css';
 
@@ -10,8 +10,12 @@ const Setting = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
+    
+
+  // 폼 등록 이벤트 핸들러
+  const handleOk = (e) => {
     setIsModalOpen(false);
+    e.preventDefault();
   };
 
   const handleCancel = () => {
