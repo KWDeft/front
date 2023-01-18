@@ -16,8 +16,6 @@ import {
     SendOutlined,
     DeleteOutlined,
   } from "@ant-design/icons";
-  import axios from 'axios';
-  import ImgCrop from 'antd-img-crop';
   
   const { TextArea } = Input;
   const onChange = (e) => {

@@ -57,6 +57,22 @@ const Comments = ({ commentsUrl, currentUserId }) => {
     });
   }, []);
 
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log("커리큘럼 추가 성공");
+  
+  //   let body = {
+  //     content: content,
+  //     userId
+  //   };
+  
+  //   client
+  //     .post("/api/course/write", body)
+  //     .then((res) => console.log(res));
+
+  //   getData();
+  // };
+
   return (
     <div className="comments">
       <h3 className="comments-title">Comments</h3>

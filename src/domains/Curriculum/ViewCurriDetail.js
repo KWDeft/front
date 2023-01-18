@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./ViewCurriDetail.css";
-import axios from 'axios';
 import {
     Avatar,
     Button,

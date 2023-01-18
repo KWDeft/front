@@ -15,7 +15,7 @@ import { EditOutlined, DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import Comments from "../../../components/comments/Comments";
 import UploadFile from "../../../components/upload/UploadFile";
 
-function TableMain() {
+function TableCoach() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingCurriculum, setEditingCurriculum] = useState(null);
   const [dataSource, setDataSource] = useState([
@@ -121,89 +121,35 @@ function TableMain() {
     setEditingCurriculum(null);
   };
   return (
-    <div className="App">
-      <header className="App-header">
-            <Button type="primary" onClick={onAddCurriculum}>
-            <PlusOutlined />
-            커리큘럼 추가
-            </Button>
-        <Table columns={columns} dataSource={dataSource}></Table>
-        <Modal
-          title="Edit Curriculum"
-          open={isEditing}
-          okText="Save"
-          onCancel={() => {
-            resetEditing();
-          }}
-          onOk={() => {
-            setDataSource((pre) => {
-              return pre.map((curriculum) => {
-                if (curriculum.id === editingCurriculum.id) {
-                  return editingCurriculum;
-                } else {
-                  return curriculum;
-                }
-              });
-            });
-            resetEditing();
-          }}
-        >
-          <Divider orientation="left" orientationMargin="0">
-            제목
-          </Divider>
-          <Input
-            value={editingCurriculum?.title}
-            onChange={(e) => {
-              setEditingCurriculum((pre) => {
-                return { ...pre, title: e.target.value };
-              });
-            }}
-          />
-          <Divider orientation="left" orientationMargin="0">
-            장애
-          </Divider>
-          <Input
-            value={editingCurriculum?.detail}
-            onChange={(e) => {
-              setEditingCurriculum((pre) => {
-                return { ...pre, detail: e.target.value };
-              });
-            }}
-          />
-          <Divider orientation="left" orientationMargin="0">
-            운동설명
-          </Divider>
-          <Input
-            value={editingCurriculum?.content}
-            onChange={(e) => {
-              setEditingCurriculum((pre) => {
-                return { ...pre, content: e.target.value };
-              });
-            }}
-          />
-          <Divider orientation="left" orientationMargin="0">
-            효과
-          </Divider>
-          <Input
-            value={editingCurriculum?.effect}
-            onChange={(e) => {
-              setEditingCurriculum((pre) => {
-                return { ...pre, effect: e.target.value };
-              });
-            }}
-          />
-          <Divider orientation="left" orientationMargin="0">
-            첨부파일
-          </Divider>
-          <UploadFile />
+    <>
+      <Divider orientation="left" orientationMargin="0">
+        장애
+      </Divider>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+        probare, quae sunt a te dicta? Refert tamen, quo modo.
+      </p>
+      <Divider orientation="left" orientationMargin="0">
+        운동 설명
+      </Divider>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+        probare, quae sunt a te dicta? Refert tamen, quo modo.
+      </p>
+      <Divider orientation="left" orientationMargin="0">
+        효과
+      </Divider>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+        probare, quae sunt a te dicta? Refert tamen, quo modo.
+      </p>
+      <UploadFile />
           <Comments
             commentsUrl="http://localhost:3004/comments"
             currentUserId="1"
           />
-        </Modal>
-      </header>
-    </div>
+    </>
   );
 }
 
-export default TableMain;
+export default TableCoach;

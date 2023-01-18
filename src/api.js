@@ -32,6 +32,14 @@ export const getComments = async () => {
         parentId: "2",
         createdAt: "2021-08-16T23:00:33.010+02:00",
       },
+      {
+        id: "5",
+        body: "Second comment third child",
+        username: "Haneul",
+        userId: "3",
+        parentId: "2",
+        createdAt: "2021-08-16T23:00:33.010+02:00",
+      },
     ];
   };
   
