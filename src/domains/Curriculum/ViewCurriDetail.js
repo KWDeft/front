@@ -16,7 +16,7 @@ import {
     SendOutlined,
     DeleteOutlined,
   } from "@ant-design/icons";
-import Comments from "../../components/comments/Comments";
+import Comments from "../../components/comments/Comment";
 import UploadFile from "../../components/upload/UploadFile";
   
   const { TextArea } = Input;

@@ -47,7 +47,7 @@ const Header = ({ user, onLogout }) => {
     <>
       <HeaderBlock>
         <Wrapper>
-          <Link to="/" className="logo">
+          <Link to="/dashboard" className="logo">
             adapfit
           </Link>
           {user ? (

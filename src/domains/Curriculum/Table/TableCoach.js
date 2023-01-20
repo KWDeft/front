@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { EditOutlined, DeleteOutlined, PlusOutlined} from "@ant-design/icons";
-import Comments from "../../../components/comments/Comments";
+import Comments from "../../../components/comments/Comment";
 import UploadFile from "../../../components/upload/UploadFile";
 
 function TableCoach() {

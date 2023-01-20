@@ -1,111 +1,67 @@
-import CommentForm from "./CommentForm";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import client from '../../lib/api/client';
 
-const Comment = ({
-  comment,
-  replies,
-  setActiveComment,
-  activeComment,
-  updateComment,
-  deleteComment,
-  addComment,
-  parentId = null,
-  currentUserId,
-}) => {
-  const isEditing =
-    activeComment &&
-    activeComment.id === comment.id &&
-    activeComment.type === "editing";
-  const isReplying =
-    activeComment &&
-    activeComment.id === comment.id &&
-    activeComment.type === "replying";
-  const fiveMinutes = 300000;
-  const timePassed = new Date() - new Date(comment.createdAt) > fiveMinutes;
-  const canDelete =
-    currentUserId === comment.userId && replies.length === 0 && !timePassed;
-  const canReply = Boolean(currentUserId);
-  const canEdit = currentUserId === comment.userId && !timePassed;
-  const replyId = parentId ? parentId : comment.id;
-  const createdAt = new Date(comment.createdAt).toLocaleDateString();
+function Comment(props) {
+  const courseId = props.courseId;
+  const [commentValue, setcommentValue] = useState('');
+  const user = useSelector((state) => state.user);
+  const [userId, setUserId] = useState("");
+
+  const handleChange = (event) => {
+    setcommentValue(event.currentTarget.value);
+  };
+
+  const userIdHandler = (e) => {
+    e.preventDefault();
+    setUserId(e.target.value);
+  };
+
+  const onsubmit = (event) => {
+    event.preventDefault();
+    const variables = {
+      content: commentValue,
+      userId: userId,
+      courseId: props.courseId,
+    };
+    client.post('/api/course/comment', variables).then((response) => {
+      if (response.data.success) {
+        console.log(response.data.result);
+      } else {
+        alert('커멘트를 저장하지 못했습니다.');
+      }
+    });
+  };
   return (
-    <div key={comment.id} className="comment">
-      <div className="comment-image-container">
-        <img src="/user-icon.png" />
-      </div>
-      <div className="comment-right-part">
-        <div className="comment-content">
-          <div className="comment-author">{comment.username}</div>
-          <div>{createdAt}</div>
-        </div>
-        {!isEditing && <div className="comment-text">{comment.body}</div>}
-        {isEditing && (
-          <CommentForm
-            submitLabel="Update"
-            hasCancelButton
-            initialText={comment.body}
-            handleSubmit={(text) => updateComment(text, comment.id)}
-            handleCancel={() => {
-              setActiveComment(null);
-            }}
-          />
-        )}
-        <div className="comment-actions">
-          {canReply && (
-            <div
-              className="comment-action"
-              onClick={() =>
-                setActiveComment({ id: comment.id, type: "replying" })
-              }
-            >
-              Reply
-            </div>
-          )}
-          {canEdit && (
-            <div
-              className="comment-action"
-              onClick={() =>
-                setActiveComment({ id: comment.id, type: "editing" })
-              }
-            >
-              Edit
-            </div>
-          )}
-          {canDelete && (
-            <div
-              className="comment-action"
-              onClick={() => deleteComment(comment.id)}
-            >
-              Delete
-            </div>
-          )}
-        </div>
-        {isReplying && (
-          <CommentForm
-            submitLabel="Reply"
-            handleSubmit={(text) => addComment(text, replyId)}
-          />
-        )}
-        {replies.length > 0 && (
-          <div className="replies">
-            {replies.map((reply) => (
-              <Comment
-                comment={reply}
-                key={reply.id}
-                setActiveComment={setActiveComment}
-                activeComment={activeComment}
-                updateComment={updateComment}
-                deleteComment={deleteComment}
-                addComment={addComment}
-                parentId={comment.id}
-                replies={[]}
-                currentUserId={currentUserId}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+    <div>
+      <br />
+      <p>Replies</p>
+      <hr />
+
+      {/* Comment Lists */}
+
+      {/* Root Comment Form */}
+
+      <form style={{ display: 'flex' }} onSubmit={onsubmit}>
+        <input
+          name="userId"
+          value={userId}
+          onChange={userIdHandler}
+        />  
+        <textarea
+          style={{ width: '100%', borderRadius: '5px' }}
+          onChange={handleChange}
+          value={commentValue}
+          name="content"
+          placeholder="코멘트를 작성해 주세요"
+        />
+        <br />
+        <button style={{ width: '20%', height: '52px' }} onClick={onsubmit}>
+          Submit
+        </button>
+      </form>
     </div>
   );
-};
+}
 
 export default Comment;

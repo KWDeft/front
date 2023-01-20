@@ -13,7 +13,7 @@ import {
   Divider,
   Button,
 } from "antd";
-import Comments from "../../components/comments/Comments";
+import Comments from "../../components/comments/Comment";
 import UploadFile from "../../components/upload/UploadFile";
 
 const Curriculum = () => {
@@ -96,12 +96,13 @@ const Curriculum = () => {
       detail: detail,
       content: content,
       effect: effect,
-      attachment: attachment,
     };
   
     client
       .post("/api/course/write", body)
-      .then((res) => console.log(res));
+      .then((res) => 
+         console.log(res)
+         );
 
     getData();
     };
@@ -129,13 +130,14 @@ const Curriculum = () => {
       render: (record) => {
         return (
           <>
+            
             <EditOutlined
               onClick={() => {
               }}
             />
             <DeleteOutlined
               onClick={() => {
-
+                onDeleteCurriculum(record);
               }}
               style={{ color: "red", marginLeft: 12 }}
             />
@@ -144,6 +146,18 @@ const Curriculum = () => {
       },
     }
   ];
+
+  const onDeleteCurriculum =  async(record) => {
+    const id = record._id;
+    Modal.confirm({
+      title: "Are you sure, you want to delete this student record?",
+      okText: "Yes",
+      okType: "danger",
+      onOk: () => {
+        client.delete(`/api/course/${id}`, id);
+      },
+    });
+  };
 
   return (
     <div>

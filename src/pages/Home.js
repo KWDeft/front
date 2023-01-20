@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
+import Dashboard from "../domains/Dashboard/Dashboard.js";
 
 const { Header, Content, Sider } = Layout;
 
