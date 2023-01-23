@@ -8,8 +8,9 @@ function Comment(props) {
   const user = useSelector((state) => state.user);
   const [userId, setUserId] = useState("");
 
-  const handleChange = (event) => {
-    setcommentValue(event.currentTarget.value);
+  const handleChange = (e) => {
+    e.preventDefault();
+    setcommentValue(e.target.value);
   };
 
   const userIdHandler = (e) => {
@@ -22,7 +23,7 @@ function Comment(props) {
     const variables = {
       content: commentValue,
       userId: userId,
-      courseId: props.courseId,
+      courseId: "63c58d3868301456009d2f14",
     };
     client.post('/api/course/comment', variables).then((response) => {
       if (response.data.success) {

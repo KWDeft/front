@@ -1,29 +1,25 @@
+import { useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
-import "./Curriculum.css";
-import {useNavigate} from 'react-router';
-import { PlusOutlined} from "@ant-design/icons";
 import client from '../../lib/api/client';
-import {
-  Table,
-  Modal,
-  Input,
-  Divider,
-  Button,
-} from "antd";
+import {Button, Modal, Divider, Input} from 'antd';
 import Comments from "../../components/comments/Comment";
-
-const Curriculum = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingCurriculum, setEditingCurriculum] = useState(null);
-  const [size, setSize] = useState("large");
+ 
+const EditCurriDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, SetTitle] = useState("");
   const [detail, SetDetail] = useState("");
   const [content, SetContent] = useState("");
   const [effect, SetEffect] = useState("");
   const [attachment, SetAttachment] = useState("");
-  
-  const navigate = useNavigate();
+
+  const location = useLocation();
+  console.log('state', location.state);
+  const id = location.state.id;
+  const titleOld = location.state.title;
+  const detailOld = location.state.detail;
+  const contentOld = location.state.content;
+  const effectOld = location.state.effect;
+  const attachmentOld = location.state.attachment;
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -61,86 +57,125 @@ const Curriculum = () => {
     SetAttachment(e.target.files[0]);
   };
 
-  const [state, setstate] = useState([]);
-  const [loading, setloading] = useState(true);
-  useEffect(() => {
-    getData();
-  }, []);
+//   const DeleteCurriculum = (e) => {
+//     client.delete(`/api/course/${id}`)
+//     .then(console.log('삭제 완료'));
+//   };
 
-  const getData = async () => {
-    await client.get("/api/course/list").then(
-      res => {
-        setloading(false);
-        setstate(
-          res.data.map(row => ({
-            Title: row.title,
-            Detail: row.detail,
-            Content: row.content,
-            Effect: row.effect,
-            Attachment: row.attachment,
-            id: row._id
-          }))
-        );
-      }
-    );
+
+  const DeleteCurriculum = (e) => {
+    Modal.confirm({
+      title: "정말로 삭제하시겠습니까?",
+      okText: "Yes",
+      okType: "danger",
+      onOk: () => {
+        client.delete(`/api/course/${id}`);
+      },
+    });
   };
+
+  
+  const onChangeImg = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    
+    if(e.target.files){
+      const attachment = e.target.files[0]
+      formData.append('file',attachment)
+      SetAttachment(attachment)
+      console.log(attachment)
+    }
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("커리큘럼 추가 성공");
+    console.log("커리큘럼 수정 성공");
   
     let body = {
       title: title,
       detail: detail,
       content: content,
       effect: effect,
+      attachment: attachment,
     };
   
     client
-      .post("/api/course/write", body)
+      .put(`/api/course/${id}`, body)
       .then((res) => 
          console.log(res)
          );
-
-    getData();
     };
 
   const columns = [
     {
-      key: "1",
       title: "Title",
       dataIndex: "Title",
     },
     {
-      key: "2",
       title: "Detail",
       dataIndex: "Detail",
     },
     {
-      key: "3",
       title: "Content",
       dataIndex: "Content",
     },
     {
-      key: "4",
       title: "Effect",
       dataIndex: "Effect",
     },
-    // {
-    //   title : "ID",
-    //   dataIndex: "id",
-    // },
+    {
+      title : "ID",
+      dataIndex: "id",
+    },
   ];
 
+
+
   return (
-    <div>
-      <br />
-      <Button type="primary" onClick={showModal}>
-            <PlusOutlined />
-            커리큘럼 추가
+    <> 
+    <Divider orientation="left" orientationMargin="0">
+        제목
+      </Divider>
+      <p>
+        {titleOld}
+      </p>
+    <Divider orientation="left" orientationMargin="0">
+        장애
+      </Divider>
+      <p>
+        {detailOld}
+      </p>
+      <Divider orientation="left" orientationMargin="0">
+        운동 설명
+      </Divider>
+      <p>
+        {contentOld}
+      </p>
+      <Divider orientation="left" orientationMargin="0">
+        효과
+      </Divider>
+      <p>
+        {effectOld}
+      </p>
+            <form>
+            <label htmlFor="profile-upload" />
+            <input 
+              type="file" 
+              id="profile-upload" 
+              accept="image/*" 
+              name="attachment"
+              value={attachment}
+              onChange={attachmentHandler}/>
+          </form>
+          <Comments
+            commentsUrl="http://localhost:3004/comments"
+            currentUserId="1"
+          />
+        <Button type="primary" onClick={showModal}>
+            수정
       </Button>
       <Modal
-          title="커리큘럼 추가"
+          title="커리큘럼 수정"
           open={isModalOpen}
           onOk={submitHandler}
           onCancel={handleCancel}
@@ -184,59 +219,22 @@ const Curriculum = () => {
           <Divider orientation="left" orientationMargin="0">
             첨부파일
           </Divider>
-          {/* <UploadFile /> */}
           <form>
             <label htmlFor="profile-upload" />
             <input 
               type="file" 
               id="profile-upload" 
               accept="image/*" 
-              name="attachment"
-              value={attachment}
-              onChange={attachmentHandler}/>
+              name="attachment"/>
           </form>
-          <Comments
+           <Comments
             commentsUrl="http://localhost:3004/comments"
             currentUserId="1"
           />
         </Modal>
-      {loading ? (
-        "Loading"
-      ) : (
-        <>
-        <Table
-          columns={columns}
-          dataSource={state}
-          pagination={{ pageSize: 50 }}
-          scroll={{ y: 240 }}
-          onRow={(record, index) => {
-            const title = record.Title;
-            const detail = record.Detail;
-            const content = record.Content;
-            const effect = record.Effect;
-            const attachment = record.Attachment;
-            const id = record.id;
-            return {
-              onClick: (e) => {
-                console.log(id);
-                navigate('/curriculum/edit', {
-                    state: {
-                      title: title,
-                      detail: detail,
-                      content: content,
-                      effect: effect,
-                      attachment: attachment,
-                      id: id
-                    },
-                  });
-              }
-            };
-          }}
-        />
-        </>
-      )}
-    </div>
+        <Button onClick={DeleteCurriculum}>삭제</Button>
+    </>
   );
 };
 
-export default Curriculum;
+export default EditCurriDetail;
