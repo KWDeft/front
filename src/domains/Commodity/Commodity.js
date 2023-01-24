@@ -90,7 +90,11 @@ const Commodity = () => {
         </Modal>
       </div>
       <br />
-      <Table columns={columns} dataSource={data} size="middle" />
+      <Table 
+        columns={columns} 
+        dataSource={data} 
+        size="middle" 
+      />
     </>
   );
 };

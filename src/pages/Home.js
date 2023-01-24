@@ -45,7 +45,7 @@ const menuItems = [
   {
     label: <Link to="/members">구성원</Link>,
     key: "구성원",
-    icon: <TeamOutlined />
+    icon: <TeamOutlined />,
   },
   {
     label: <Link to="/calendar">일정</Link>,
@@ -74,13 +74,13 @@ const PostListPage = () => {
             <Menu
               mode="inline"
               defaultSelectedKeys={["1"]}
-              defaultOpenKeys={["sub1"]}
               style={{
                 height: "100%",
                 borderRight: 0
               }}
               items={menuItems}
-            />
+            >
+            </Menu>
           </Sider>
           <Layout
             style={{

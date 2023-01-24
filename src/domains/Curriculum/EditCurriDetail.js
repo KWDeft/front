@@ -2,9 +2,12 @@ import { useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import client from '../../lib/api/client';
 import {Button, Modal, Divider, Input} from 'antd';
-import Comments from "../../components/comments/Comment";
+import {useNavigate} from 'react-router-dom';
+import Comments from '../../components/comment/Comment.js';
  
 const EditCurriDetail = () => {
+  const navigate = useNavigate();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, SetTitle] = useState("");
   const [detail, SetDetail] = useState("");
@@ -62,7 +65,6 @@ const EditCurriDetail = () => {
 //     .then(console.log('삭제 완료'));
 //   };
 
-
   const DeleteCurriculum = (e) => {
     Modal.confirm({
       title: "정말로 삭제하시겠습니까?",
@@ -72,7 +74,20 @@ const EditCurriDetail = () => {
         client.delete(`/api/course/${id}`);
       },
     });
+    navigate('/curriculum');
   };
+
+//   useEffect(() => {
+//     client.get(`/api/course/comment/${id}`)
+//           .then(response => {
+//             if (response.data.success) {
+                
+//                 SetCommentLists(response.data.comments)
+//             } else {
+//                 alert('Failed to get comment Info')
+//             }
+//         })
+// }, [])
 
   
   const onChangeImg = (e) => {
@@ -104,6 +119,8 @@ const EditCurriDetail = () => {
       .then((res) => 
          console.log(res)
          );
+
+     navigate('/curriculum');
     };
 
   const columns = [
@@ -128,8 +145,6 @@ const EditCurriDetail = () => {
       dataIndex: "id",
     },
   ];
-
-
 
   return (
     <> 
@@ -166,10 +181,10 @@ const EditCurriDetail = () => {
               name="attachment"
               value={attachment}
               onChange={attachmentHandler}/>
+              
           </form>
           <Comments
-            commentsUrl="http://localhost:3004/comments"
-            currentUserId="1"
+            id = {id}
           />
         <Button type="primary" onClick={showModal}>
             수정
@@ -186,8 +201,10 @@ const EditCurriDetail = () => {
           <Input
             autoComplete="title"
             name="title"
+            id="title"
             value={title}
             onChange={titleHandler}
+            placeholder={titleOld}
           />
           <Divider orientation="left" orientationMargin="0">
             장애
@@ -197,6 +214,7 @@ const EditCurriDetail = () => {
             name="detail"
             value={detail}
             onChange={detailHandler}
+            placeholder={detailOld}
           />
           <Divider orientation="left" orientationMargin="0">
             운동설명
@@ -206,6 +224,7 @@ const EditCurriDetail = () => {
             name="content"
             value={content}
             onChange={contentHandler}
+            placeholder={contentOld}
           />
           <Divider orientation="left" orientationMargin="0">
             효과
@@ -215,6 +234,7 @@ const EditCurriDetail = () => {
             name="effect"
             value={effect}
             onChange={effectHandler}
+            placeholder={effectOld}
           />
           <Divider orientation="left" orientationMargin="0">
             첨부파일
@@ -227,14 +247,11 @@ const EditCurriDetail = () => {
               accept="image/*" 
               name="attachment"/>
           </form>
-           <Comments
-            commentsUrl="http://localhost:3004/comments"
-            currentUserId="1"
-          />
         </Modal>
         <Button onClick={DeleteCurriculum}>삭제</Button>
     </>
   );
 };
+
 
 export default EditCurriDetail;

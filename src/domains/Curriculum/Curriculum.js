@@ -10,11 +10,8 @@ import {
   Divider,
   Button,
 } from "antd";
-import Comments from "../../components/comments/Comment";
 
 const Curriculum = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingCurriculum, setEditingCurriculum] = useState(null);
   const [size, setSize] = useState("large");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, SetTitle] = useState("");
@@ -22,7 +19,8 @@ const Curriculum = () => {
   const [content, SetContent] = useState("");
   const [effect, SetEffect] = useState("");
   const [attachment, SetAttachment] = useState("");
-  
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10);
   const navigate = useNavigate();
 
   const showModal = () => {
@@ -195,10 +193,6 @@ const Curriculum = () => {
               value={attachment}
               onChange={attachmentHandler}/>
           </form>
-          <Comments
-            commentsUrl="http://localhost:3004/comments"
-            currentUserId="1"
-          />
         </Modal>
       {loading ? (
         "Loading"
@@ -207,8 +201,15 @@ const Curriculum = () => {
         <Table
           columns={columns}
           dataSource={state}
-          pagination={{ pageSize: 50 }}
-          scroll={{ y: 240 }}
+          pagination={{ 
+            current:page,
+            pageSize: pageSize,
+            total:500,
+            onChange: (page,pageSize)=>{
+              setPage(page);
+              setPageSize(pageSize)
+            }
+           }}
           onRow={(record, index) => {
             const title = record.Title;
             const detail = record.Detail;

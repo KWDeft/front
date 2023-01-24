@@ -15,6 +15,8 @@ import Message from "./domains/Message/Message.js";
 import Dashboard from './domains/Dashboard/Dashboard.js';
 import Commodity from './domains/Commodity/Commodity.js';
 import Members from './domains/Members/Members.js';
+import NewCustomer from './domains/Customers/NewCustomer.js';
+import PaymentInfo from './domains/Customers/PaymentInfo.js';
 
 const App = () => {
   return (
@@ -31,6 +33,8 @@ const App = () => {
         <Route path="/customers" element={<Customers />} />
         <Route path="/customers/info" element={<CustomerInfo />} />
         <Route path="/customers/infoedit" element={<CustomerEdit />} />
+        <Route path="/customers/new" element={<NewCustomer />} />
+        <Route path="/customers/paymentinfo" element={<PaymentInfo />} />
         <Route path="/message" element={<Message />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/commodity" element={<Commodity />} />
