@@ -1,8 +1,9 @@
 import { Badge, Calendar, Button, Modal } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CalendarMain.css";
 import { PlusOutlined } from "@ant-design/icons";
 import NewCalendar from "./NewCalendar.js";
+import client from '../../lib/api/client';
 
 //메인은 관리자용
 const getListData = (value) => {
@@ -106,6 +107,20 @@ const CalendarMain = () => {
       </ul>
     );
   };
+  
+  // const [stateSchedule, setstateSchedule] = useState({});
+  // useEffect(() => {
+  //   client
+  //     .get('/api/schedule/admin/list')
+  //     .then(d => {
+  //       let schedule = d.date;
+  //       setstateSchedule({
+  //         id: id,
+  //       })
+  //     })
+  // }, []);
+
+
   return (
     <>
       <h1>일정</h1>

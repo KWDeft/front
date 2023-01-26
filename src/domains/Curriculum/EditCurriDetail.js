@@ -21,11 +21,27 @@ const EditCurriDetail = () => {
   const location = useLocation();
   console.log('state', location.state);
   const id = location.state.id;
-  const titleOld = location.state.title;
-  const detailOld = location.state.detail;
-  const contentOld = location.state.content;
-  const effectOld = location.state.effect;
-  const attachmentOld = location.state.attachment;
+
+  const [stateCust, setstateCust] = useState({});
+  useEffect(() => {
+    getCurriculumById(id);
+  }, []);
+
+  const getCurriculumById = id => {
+    client.get(`/api/course/${id}`)
+      .then(d => {
+        let curriculum = d.data;
+        setstateCust({
+          id: id,
+          title : curriculum.title,
+          detail: curriculum.detail,
+          content: curriculum.content,
+          effect: curriculum.effect,
+          attachment: curriculum.attachment
+        });
+      })
+      .catch(err => alert(err));
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -94,19 +110,10 @@ const EditCurriDetail = () => {
   }
 
   const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("커리큘럼 수정 성공");
-  
-    let body = {
-      title: title,
-      detail: detail,
-      content: content,
-      effect: effect,
-      attachment: attachment,
-    };
-  
+    console.log(stateCust);
+
     client
-      .put(`/api/course/${id}`, body)
+      .put(`/api/course/${id}`, stateCust)
       .then((res) => 
          console.log(res)
          );
@@ -140,7 +147,7 @@ const EditCurriDetail = () => {
   return (
     <>
           <Card
-              title={titleOld}
+              title={stateCust.title}
               bordered={false}
               // style={{
               //   width: 300,
@@ -150,19 +157,19 @@ const EditCurriDetail = () => {
         <h5>장애</h5>
       </Divider>
       <p>
-        {detailOld}
+        {stateCust.detail}
       </p>
       <Divider orientation="left" orientationMargin="0">
         <h5>운동설명</h5>
       </Divider>
       <p>
-        {contentOld}
+        {stateCust.content}
       </p>
       <Divider orientation="left" orientationMargin="0">
         <h5>효과</h5>
       </Divider>
       <p>
-        {effectOld}
+        {stateCust.effect}
       </p>
       <Divider orientation="left" orientationMargin="0">
         <h5>첨부파일</h5>
@@ -198,9 +205,17 @@ const EditCurriDetail = () => {
             autoComplete="title"
             name="title"
             id="title"
-            value={title}
-            onChange={titleHandler}
-            placeholder={titleOld}
+            value={stateCust.title}
+            onChange={e => {
+              let value = e.target.value;
+              setstateCust({
+                title: value,
+                detail: stateCust.detail,
+                content: stateCust.content,
+                effect: stateCust.effect,
+                attachment: stateCust.attachment
+              });
+            }}
           />
           <Divider orientation="left" orientationMargin="0">
             장애
@@ -208,9 +223,17 @@ const EditCurriDetail = () => {
           <Input
             autoComplete="detail"
             name="detail"
-            value={detail}
-            onChange={detailHandler}
-            placeholder={detailOld}
+            value={stateCust.detail}
+            onChange={e => {
+              let value = e.target.value;
+              setstateCust({
+                title: stateCust.title,
+                detail: value,
+                content: stateCust.content,
+                effect: stateCust.effect,
+                attachment: stateCust.attachment
+              });
+            }}
           />
           <Divider orientation="left" orientationMargin="0">
             운동설명
@@ -218,9 +241,17 @@ const EditCurriDetail = () => {
           <Input
             autoComplete="content"
             name="content"
-            value={content}
-            onChange={contentHandler}
-            placeholder={contentOld}
+            value={stateCust.content}
+            onChange={e => {
+              let value = e.target.value;
+              setstateCust({
+                title: stateCust.title,
+                detail: stateCust.detail,
+                content: value,
+                effect: stateCust.effect,
+                attachment: stateCust.attachment
+              });
+            }}
           />
           <Divider orientation="left" orientationMargin="0">
             효과
@@ -228,9 +259,17 @@ const EditCurriDetail = () => {
           <Input
             autoComplete="effect"
             name="effect"
-            value={effect}
-            onChange={effectHandler}
-            placeholder={effectOld}
+            value={stateCust.effect}
+            onChange={e => {
+              let value = e.target.value;
+              setstateCust({
+                title: stateCust.title,
+                detail: stateCust.detail,
+                content: stateCust.content,
+                effect: value,
+                attachment: stateCust.attachment
+              });
+            }}
           />
           <Divider orientation="left" orientationMargin="0">
             첨부파일
@@ -242,7 +281,18 @@ const EditCurriDetail = () => {
               type="file" 
               id="profile-upload" 
               accept="image/*" 
-              name="attachment"/>
+              name="attachment"
+              value={stateCust.attachment}
+              onChange={e => {
+              let value = e.target.value;
+              setstateCust({
+                title: stateCust.title,
+                detail: stateCust.detail,
+                content: stateCust.content,
+                effect: stateCust.effect,
+                attachment: value
+              });
+            }}/>
           </form>
         </Modal>
         <Button onClick={DeleteCurriculum}>삭제</Button>

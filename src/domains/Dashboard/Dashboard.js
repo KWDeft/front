@@ -4,8 +4,12 @@ import "./Dashboard.css";
 import {  PushpinFilled } from "@ant-design/icons";
 import Customers from "../Customers/Customers";
 import DBChart from "./DBChart";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
+
+  const username = user.username;
     
     // 오늘 날짜 
     const today = () => {
@@ -40,7 +44,7 @@ const Dashboard = () => {
           >
             <Row>
               <div className="container1">
-              <h3><PushpinFilled /> "회원이름" 님, 오늘의 일정({today()})</h3>
+              <h3><PushpinFilled /> {username} 님, 오늘의 일정({today()})</h3>
               <List
                 size="small"
                 bordered
@@ -50,15 +54,6 @@ const Dashboard = () => {
               </div>
             </Row>
             <br/>
-            <div className="container1">
-              <h3><PushpinFilled /> 매출현황</h3>
-              <DatePicker onChange={onChange} picker="year" />
-              <Row>
-                <DBChart />                
-              </Row>
-
-            </div>
-            
             
           </Col>
           <Col
