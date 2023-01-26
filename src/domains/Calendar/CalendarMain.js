@@ -4,6 +4,7 @@ import "./CalendarMain.css";
 import { PlusOutlined } from "@ant-design/icons";
 import NewCalendar from "./NewCalendar.js";
 
+//메인은 관리자용
 const getListData = (value) => {
   let listData;
   switch (value.date()) {

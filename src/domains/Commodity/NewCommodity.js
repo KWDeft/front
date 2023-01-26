@@ -101,27 +101,6 @@ const NewCommodity = () => {
           )}
         </Form.List>
       </Form>
-
-      <Form
-        {...formItemLayout}
-        layout={formLayout}
-        form={form}
-        initialValues={{
-          layout: formLayout
-        }}
-      >
-        <Form.Item label="회원권 종목">
-          <Select>
-            <Select.Option value="demo">APT 1:1</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            등록
-          </Button>
-          <Button>닫기</Button>
-        </Form.Item>
-      </Form>
     </div>
   );
 };

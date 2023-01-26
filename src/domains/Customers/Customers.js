@@ -600,6 +600,8 @@ import { memo } from "react";
               birthday: row.birthday,
               membership: row.membership,
               user_purpose: row.user_purpose,
+              vaccinate: row.vaccinate,
+              category: row.category,
               id: row._id
             }))
           );
@@ -695,7 +697,12 @@ import { memo } from "react";
             const statement = record.statement;
             const birthday = record.birthday;
             const user_purpose = record.user_purpose;
+            const vaccinate = record.vaccinate;
+            const category = record.category;
+            const date_signup = record.date_signup;
+            const membership = record.membership;
             const id = record.id;
+
             return {
               onClick: (e) => {
                 console.log(id);
@@ -716,7 +723,11 @@ import { memo } from "react";
                       inflow: inflow,
                       statement: statement,
                       birthday: birthday,
+                      date_signup: date_signup,
+                      membership: membership,
                       user_purpose: user_purpose,
+                      vaccinate: vaccinate,
+                      category: category,
                       id: id
                     },
                   });

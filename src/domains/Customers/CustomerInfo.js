@@ -1,6 +1,6 @@
 import { Col, Typography , Select, Modal, Image, Row, Button, Radio, Checkbox} from "antd";
 import React from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {  DeleteOutlined } from "@ant-design/icons";
 import './CustomerInfo.css';
 const { Text } = Typography;
@@ -28,9 +28,13 @@ const CustomerInfo = () => {
     const inflow = location.state.inflow;
     const statement = location.state.statement;
     const birthday = location.state.birthday;
-    const birth_signup = location.state.birth_signup;
+    const date_signup = location.state.date_signup;
     const membership = location.state.membership;
     const user_purpose = location.state.user_purpose;
+    const vaccinate = location.state.vaccinate;
+    const category= location.state.category;
+
+    const navigate = useNavigate();
 
     const deleteInfo = () => {
         Modal.error({
@@ -38,6 +42,23 @@ const CustomerInfo = () => {
           content: '해당 회원 정보를 삭제하시겠습니까?',
         });
       };
+
+      // id, 이름, 성별, 전화번호, 생년월일, 주소, 장애유형, 유입경로, 운동목적 전달
+    const move = () => {
+        navigate('/customers/paymentinfo', {
+            state : {
+                id: id,
+                sex: sex,
+                name: name,
+                phone: phone,
+                birthday: birthday,
+                address: address,
+                obstacle_type: obstacle_type,
+                inflow: inflow,
+                user_purpose: user_purpose
+            }
+        });
+    };
 
     
     return(
@@ -67,18 +88,11 @@ const CustomerInfo = () => {
                                 <h4>결제정보</h4>
                             </Col>
                             <Col>
-                                <Select
-                                defaultValue="바우처" size="small" onChange={handleChange}
-                                options={[
-                                    { value: '바우처', label: '바우처' },
-                                    { value: '실비', label: '실비' },
-                                    { value: '바우처+실비', label: '바우처+실비'},
-                                ]}
-                                />
+                                <h4>{payment}</h4>
                             </Col>
                             </Row>
                             <Row gutter={16}>
-                                <Button type="link" size="small" href="/customers/info/payment">결제정보 확인</Button>
+                                <Button type="link" onClick={move}>결제정보 확인</Button>
                             </Row>
                         </Col>
                         </div>
@@ -146,14 +160,7 @@ const CustomerInfo = () => {
                                 <h4>예방접종</h4>
                             </Col>
                             <Col>
-                            <Select
-                            defaultValue="lucy" size="small" style={{width : 100}} onChange={handleChange}
-                            options={[
-                                { value: 'jack', label: 'Jack' },
-                                { value: 'lucy', label: 'Lucy' },
-                                { value: 'Yiminghe', label: 'yiminghe'},
-                            ]}
-                            />
+                                <h4>{vaccinate}</h4>
                             </Col>
                         </Row><br></br>
                         <Row gutter={10}>
@@ -167,8 +174,6 @@ const CustomerInfo = () => {
                             </Row><br></br>
                         </Col>
                         </div>
-
-
                         <div className="Col3">
                         <Col>
                             <Row gutter={16}>
@@ -176,14 +181,7 @@ const CustomerInfo = () => {
                                 <h4>유형</h4>
                             </Col>
                             <Col>
-                                <Select
-                                defaultValue="오프라인" size="small" onChange={handleChange}
-                                options={[
-                                    { value: '온라인', label: '온라인' },
-                                    { value: '오프라인', label: '오프라인' },
-                                    { value: '가정방문', label: '가정방문'},
-                                ]}
-                                />
+                                <h4>{category}</h4>
                             </Col>
                             </Row><br></br>
                             <Row gutter={16}>
@@ -215,7 +213,7 @@ const CustomerInfo = () => {
                                 <h4>가입일시</h4>
                             </Col>
                             <Col>
-                                <h4>{birth_signup}</h4>
+                                <h4>{date_signup}</h4>
                             </Col>
                             </Row><br></br>
                             

@@ -1,11 +1,15 @@
 import { Col, Row, Input, Typography, Tag, Space, Table } from "antd";
 
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./PaymentInfo.css";
 import {  PushpinFilled } from "@ant-design/icons";
+import { useLocation } from "react-router-dom";
+
+
 const { Search } = Input;
 const onSearch = (value: string) => console.log(value);
 const { Text } = Typography;
+
 
 const columns = [
     {
@@ -80,6 +84,17 @@ const columns = [
 
 
 const PaymentInfo = () => {
+    const location = useLocation();
+    console.log('state', location.state);
+    const userId = location.state.id;
+    const name = location.state.name;
+    const sex = location.state.sex;
+    const phone = location.state.phone;
+    const birthday = location.state.birthday;
+    const address = location.state.address;
+    const obstacle_type = location.state.obstacle_type;
+    const inflow = location.state.inflow;
+    const user_purpose = location.state.user_purpose;
 
     return(
       <>
@@ -93,30 +108,30 @@ const PaymentInfo = () => {
                 <Row>
                     <Col span={6}>
                         <Row>
-                            <h2>곰도리</h2>
-                            <Tag color="blue" style={{ height:25, width:25}}>남</Tag>
+                            <h2>{name}</h2>
+                            <Tag color="purple" style={{ height:25, width:25}}>{sex}</Tag>
                         </Row>
                     </Col>
                     <Col span={6} >
                         <h5>전화번호</h5>
-                        <h5>010-1234-1234</h5>
+                        <h5>{phone}</h5>
                         <br></br>
                         <h5>장애유형</h5>
-                        <h5>경추손상</h5>
+                        <h5>{obstacle_type}</h5>
                     </Col>
                     <Col span={6}>
                         <h5>생년월일</h5>
-                        <h5>2001.01.01</h5>
+                        <h5>{birthday}</h5>
                         <br></br>
                         <h5>유입경로</h5>
-                        <h5>SNS</h5>
+                        <h5>{inflow}</h5>
                     </Col>
                     <Col span={6}>
                         <h5>주소</h5>
-                        <h5>서울시 노원구</h5>
+                        <h5>{address}</h5>
                         <br></br>
                         <h5>운동목적</h5>
-                        <h5>체형교정</h5>
+                        <h5>{user_purpose}</h5>
                     </Col>
                 </Row>
             </div>

@@ -12,6 +12,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import moment from "moment";
 import "./NewCalendar.css";
+import CustomerSearch from "../Customers/CustomerSearch.js";
 
 const NewCalendar = () => (
   <div className="Div">
@@ -19,60 +20,16 @@ const NewCalendar = () => (
       <div className="div1">
         <Col>
           <Title level={4}>회원 검색 </Title>
-          <br></br>
-          <Title level={5}>검색 대상</Title>
-
-          <Row>
-            <Radio.Group>
-              <Radio.Button value="large">전체회원</Radio.Button>
-              <Radio.Button value="default">등록회원</Radio.Button>
-              <Radio.Button value="small">만기회원</Radio.Button>
-            </Radio.Group>
-          </Row>
-
-          <br></br>
-          <br></br>
-
-          <Row>
-            <Col span={8}>
-              <Dropdown overlay={menu}>
-                <Typography.Link>
-                  <Space>
-                    검색항목
-                    <DownOutlined />
-                  </Space>
-                </Typography.Link>
-              </Dropdown>
-            </Col>
-
-            <Col span={16}>
-              <AutoComplete
-                popupClassName="certain-category-search-dropdown"
-                dropdownMatchSelectWidth={500}
-                style={{ width: 250 }}
-              >
-                <Input.Search size="small" placeholder="검색" />
-              </AutoComplete>
-            </Col>
-          </Row>
-
-          <br></br>
-
-          <Row>
-            <div>
-              <Table columns={columns} dataSource={data} size="small" />
-            </div>
-          </Row>
+          <CustomerSearch />
         </Col>
       </div>
 
       <div className="div2">
         <Col>
           <Title level={4}>일정</Title>
-          <br></br>
           <Title level={5}>수업 일시</Title>
 
-          <Space direction="vertical" size={12}>
+          <Space direction="vertical" size={20}>
             <DatePicker
               defaultValue={moment("2022/11/3", dateFormat)}
               format={dateFormat}

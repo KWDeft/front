@@ -116,23 +116,7 @@ const NewCustomer = () => (
             <h4>장애 유형</h4>
         </Col>
         <Col>
-        <Select
-          defaultValue="lucy" size="small" style={{width : 100}} onChange={handleChange}
-          options={[
-            {
-              value: 'jack',
-              label: 'Jack',
-            },
-            {
-              value: 'lucy',
-              label: 'Lucy',
-            },
-            {
-              value: 'Yiminghe',
-              label: 'yiminghe',
-            },
-          ]}
-        />
+          <Input size="small"/>
         </Col>
       </Row><br></br>
       <Row gutter={16}>
@@ -140,14 +124,7 @@ const NewCustomer = () => (
             <h4>예방접종</h4>
         </Col>
         <Col>
-        <Select
-          defaultValue="lucy" size="small" style={{width : 100}} onChange={handleChange}
-          options={[
-            { value: 'jack', label: 'Jack' },
-            { value: 'lucy', label: 'Lucy' },
-            { value: 'Yiminghe', label: 'yiminghe'},
-          ]}
-        />
+          <Input size="small"/>
         </Col>
       </Row><br></br>
       <Row gutter={10}>

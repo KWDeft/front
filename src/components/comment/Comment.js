@@ -16,6 +16,7 @@ const Comment = () => {
     const [content, setContent] = useState("");
     const { user } = useSelector(({ user }) => ({ user: user.user }));
     const userId = user.username;
+    
 
     const { TextArea } = Input;
     
@@ -58,13 +59,6 @@ const Comment = () => {
     return ( 
         <div className="comments-wrapper">
             <div className="comments-header">
-                {/* <TextField
-                    className="comments-header-testarea"
-                    onChange={(e) => {
-                        setUserId(e.target.value)
-                    }}
-                    placeholder= "아이디를 입력해주세요"
-                /> */}
                 <TextField
                     className="comments-header-testarea"
                     onChange={(e) => {

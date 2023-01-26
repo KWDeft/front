@@ -1,12 +1,15 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
+import {  useSelector  } from 'react-redux';
 import React, { useState, useEffect } from "react";
 import client from '../../lib/api/client';
-import {Button, Modal, Divider, Input} from 'antd';
+import {Button, Modal, Divider, Input, Card} from 'antd';
 import {useNavigate} from 'react-router-dom';
 import Comments from '../../components/comment/Comment.js';
  
 const EditCurriDetail = () => {
+
   const navigate = useNavigate();
+  
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, SetTitle] = useState("");
@@ -77,18 +80,6 @@ const EditCurriDetail = () => {
     navigate('/curriculum');
   };
 
-//   useEffect(() => {
-//     client.get(`/api/course/comment/${id}`)
-//           .then(response => {
-//             if (response.data.success) {
-                
-//                 SetCommentLists(response.data.comments)
-//             } else {
-//                 alert('Failed to get comment Info')
-//             }
-//         })
-// }, [])
-
   
   const onChangeImg = (e) => {
     e.preventDefault();
@@ -147,31 +138,35 @@ const EditCurriDetail = () => {
   ];
 
   return (
-    <> 
-    <Divider orientation="left" orientationMargin="0">
-        제목
-      </Divider>
-      <p>
-        {titleOld}
-      </p>
-    <Divider orientation="left" orientationMargin="0">
-        장애
+    <>
+          <Card
+              title={titleOld}
+              bordered={false}
+              // style={{
+              //   width: 300,
+              // }}
+            >
+              <Divider orientation="left" orientationMargin="0">
+        <h5>장애</h5>
       </Divider>
       <p>
         {detailOld}
       </p>
       <Divider orientation="left" orientationMargin="0">
-        운동 설명
+        <h5>운동설명</h5>
       </Divider>
       <p>
         {contentOld}
       </p>
       <Divider orientation="left" orientationMargin="0">
-        효과
+        <h5>효과</h5>
       </Divider>
       <p>
         {effectOld}
       </p>
+      <Divider orientation="left" orientationMargin="0">
+        <h5>첨부파일</h5>
+      </Divider>
             <form>
             <label htmlFor="profile-upload" />
             <input 
@@ -183,6 +178,7 @@ const EditCurriDetail = () => {
               onChange={attachmentHandler}/>
               
           </form>
+            </Card>
           <Comments
             id = {id}
           />
@@ -239,6 +235,7 @@ const EditCurriDetail = () => {
           <Divider orientation="left" orientationMargin="0">
             첨부파일
           </Divider>
+                  
           <form>
             <label htmlFor="profile-upload" />
             <input 
