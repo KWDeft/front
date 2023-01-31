@@ -10,8 +10,11 @@ import {
   Divider,
   Button,
 } from "antd";
+import { useSelector } from "react-redux";
 
 const Curriculum = () => {
+  const { auth } = useSelector(({ auth }) => ({ auth: auth.auth }))
+
   const [size, setSize] = useState("large");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, SetTitle] = useState("");
@@ -133,10 +136,15 @@ const Curriculum = () => {
   return (
     <div>
       <br />
+      {
+        auth.role === 'admin'
+        ? 
       <Button type="primary" onClick={showModal}>
             <PlusOutlined />
             커리큘럼 추가
       </Button>
+      : <></>
+      }
       <Modal
           title="커리큘럼 추가"
           open={isModalOpen}
@@ -219,6 +227,7 @@ const Curriculum = () => {
             const id = record.id;
             return {
               onClick: (e) => {
+                if (auth.role === "admin") {
                 console.log(id);
                 navigate('/curriculum/edit', {
                     state: {
@@ -230,6 +239,9 @@ const Curriculum = () => {
                       id: id
                     },
                   });
+                } else {
+                  console.log(`${id} only admin edit`)
+                }
               }
             };
           }}

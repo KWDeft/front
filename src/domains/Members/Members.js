@@ -5,6 +5,7 @@ import NewMember from "./NewMember.js";
 import { Link, Outlet } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import client from '../../lib/api/client';
+import { useSelector } from "react-redux";
 const { Search } = Input;
 const onSearch = (value) => console.log(value);
 
@@ -28,6 +29,8 @@ const columns = [
 ];
 
 const Members = () => {
+  const { auth } = useSelector(({ auth }) => ({ auth: auth.auth }))
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10);
@@ -102,10 +105,15 @@ const Members = () => {
       <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="관리자" key="1"><div className="commoDiv1">
             <Search />
-            <Button type="primary" onClick={showModal}>
-              <PlusOutlined />
-              신규 관리자 등록
-            </Button>
+            {
+              auth.role === "admin" 
+              ?
+              <Button type="primary" onClick={showModal}>
+                <PlusOutlined />
+                신규 관리자 등록
+              </Button>
+              : <></>
+            }
             <Modal
               title="신규 관리자 등록"
               open={isModalOpen}
